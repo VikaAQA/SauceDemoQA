@@ -7,7 +7,6 @@ public class CartTest extends BaseTest {
 
     @Test
     public void checkCart() {
-
         driver.get("https://www.saucedemo.com/");
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
         driver.findElement(By.name("password")).sendKeys("secret_sauce");
@@ -26,5 +25,6 @@ public class CartTest extends BaseTest {
         SoftAssert softAssert = new SoftAssert();
         softAssert.assertEquals(priceShoppingBasket, priceProductCatalog, "Цена продукта  в каталоге и в корзине не совпадает ");
         softAssert.assertEquals(nameProductCatalog, nameProductShoppingBasket, "Имя продукта в корзине и в каталоге не совпадает");
+        softAssert.assertAll();
     }
 }

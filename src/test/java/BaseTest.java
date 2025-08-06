@@ -8,7 +8,6 @@ import java.time.Duration;
 import java.util.HashMap;
 
 public class BaseTest {
-
     WebDriver driver;
 
     @BeforeMethod
