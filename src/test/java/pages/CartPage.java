@@ -30,22 +30,22 @@ public class CartPage extends BasePage {
         return driver.findElement(By.cssSelector(".inventory_item_price")).getText();
     }
 
-    public void removeProductInBasket(String product) {
+    public CartPage removeProductInBasket(String product) {
         driver.findElement(By.xpath("//div[text()='" + product + "']/ancestor::div[@class='cart_item']//button[text()='Remove']")).click();
-    }
+        return this;  }
 
     public int checkCountProductBasket() {
         return driver.findElements(By.cssSelector(".cart_item")).size();
     }
 
-    public void clickToCheckoutPage() {
+    public CartPage clickToCheckoutPage() {
         driver.findElement(By.xpath(BTN_CHECKOUT)).click();
-    }
+        return this; }
 
-    public void clickToContinueShopping() {
+    public CartPage clickToContinueShopping() {
         driver.findElement(By.xpath("  //button[text()='Continue Shopping']")).click();
         waitElement(By.xpath("//span[text()='Products']"));//Ждет появления заголовка Продукт
-    }
+        return this;  }
 
     //Проверка наличия товара в корзине
     public boolean isProductInCart(String product) {

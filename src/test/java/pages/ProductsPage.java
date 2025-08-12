@@ -2,6 +2,7 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import pages.components.ProductComponent;
 
 public class ProductsPage extends BasePage {
 
@@ -27,6 +28,7 @@ public class ProductsPage extends BasePage {
 
      //Добавить в корзину товар по имени из каталога
      public void addProductInBasket(String... products) {
+         new ProductComponent().addProduct();
           for (String product : products) {
                driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
           }
