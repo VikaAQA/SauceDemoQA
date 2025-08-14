@@ -3,8 +3,9 @@ package tests;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
@@ -12,10 +13,9 @@ import pages.ProductsPage;
 
 import java.time.Duration;
 import java.util.HashMap;
-
+@Listeners(TestListener.class)
 public class BaseTest {
     WebDriver driver;
-
     LoginPage loginPage;
     ProductsPage productsPage;
     CartPage cartPage;
@@ -28,9 +28,10 @@ public class BaseTest {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
     }
-
-    @BeforeMethod
-    public void setup() {
+    @Parameters({"browser"})
+    @BeforeMethod(alwaysRun = true)
+    public void setup(@Optional("chrome") String browser) {
+        if(browser.equalsIgnoreCase("chrome")){
         ChromeOptions options = new ChromeOptions();
         HashMap<String, Object> chromePrefs = new HashMap<>();
         chromePrefs.put("credentials_enable_service", false);
@@ -42,7 +43,12 @@ public class BaseTest {
         options.addArguments("--disable-infobars");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
-        driver.manage().window().maximize();
+        driver.manage().window().maximize();}
+        else if (browser.equalsIgnoreCase("Firefox")){
+            driver =  new FirefoxDriver();
+            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+            driver.manage().window().maximize();
+        }
 
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
