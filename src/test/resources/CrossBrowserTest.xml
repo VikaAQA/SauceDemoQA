@@ -9,7 +9,7 @@
             </classes>
 
     </test> <!-- Test -->
-    <test name="ege">
+    <test name="Firefox">
         <classes> <class name="tests.CartTest"/>
             <parameter name="browser" value="Firefox"></parameter>
         </classes>
