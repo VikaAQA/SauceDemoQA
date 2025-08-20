@@ -1,9 +1,11 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.CartPage;
 import pages.CheckoutPage;
@@ -24,6 +26,7 @@ public class BaseTest {
     protected final String USERNAME = "standard_user";
     protected final String PASSWORD = "secret_sauce";
 
+    @Description("Авторизация пользователя")
     protected void loginAsStandardUser() {
         loginPage.open();
         loginPage.login(USERNAME, PASSWORD);
@@ -58,7 +61,10 @@ public class BaseTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void teardown() {
+    public void teardown(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            AllureUtils.takeScreenshot(driver);
+        }
         driver.quit();
     }
 }

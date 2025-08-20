@@ -1,39 +1,42 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import pages.components.ProductComponent;
 
 public class ProductsPage extends BasePage {
 
-     private final By TITLE = By.className("title");
-     private final String ADD_TO_CART_PATTERN = "//*[text()='%s']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']";
+    private final By TITLE = By.className("title");
+    private final String ADD_TO_CART_PATTERN = "//*[text()='%s']/ancestor::div[@class='inventory_item']//button[text()='Add to cart']";
 
-     public ProductsPage(WebDriver driver) {
-          super(driver);
-     }
+    public ProductsPage(WebDriver driver) {
+        super(driver);
+    }
 
-     public void open(){
-          driver.get(BASE_URL+"inventory.html");
-     }
+    public void open() {
+        driver.get(BASE_URL + "inventory.html");
+    }
 
-      public ProductsPage isPageOpened(){//проверка что страница открыта
-           waitElement(TITLE);
-          return this;
-   }
+    @Step("Открыта страница Каталога")
+    public ProductsPage isPageOpened() {
+        waitElement(TITLE);
+        return this;
+    }
 
-     public String getTitle() {
-          return driver.findElement(TITLE).getText();
-     }
+    public String getTitle() {
+        return driver.findElement(TITLE).getText();
+    }
 
-     //Добавить в корзину товар по имени из каталога
-     public void addProductInBasket(String... products) {
-         new ProductComponent().addProduct();
-          for (String product : products) {
-               driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
-          }
-     }
+    @Step("Добавление в коризну товара из каталога") //Добавить в корзину товар по имени из каталога
+    public void addProductInBasket(String... products) {
+        new ProductComponent().addProduct();
+        for (String product : products) {
+            driver.findElement(By.xpath(String.format(ADD_TO_CART_PATTERN, product))).click();
+        }
+    }
 
+    @Step("Добавление в коризну нескольких товаров из каталога")
     //Добавить в корзину несколько товаров по индексу
     public void addFewProductInBasket(int... indexes) {
         for (int index : indexes) {
@@ -47,12 +50,11 @@ public class ProductsPage extends BasePage {
                 .get(index)
                 .getText();
     }
-
-        // Получить цену товара по имени из каталога
-     public String getProductPriceFromCatalog(String productName) {
-          String xpath = String.format("//div[text()='%s']/ancestor::div[@class='inventory_item']//div[@data-test='inventory-item-price']", productName);
-          return driver.findElement(By.xpath(xpath)).getText();
-     }
+    @Step("Получение цены товара по имени из каталога")
+       public String getProductPriceFromCatalog(String productName) {
+        String xpath = String.format("//div[text()='%s']/ancestor::div[@class='inventory_item']//div[@data-test='inventory-item-price']", productName);
+        return driver.findElement(By.xpath(xpath)).getText();
+    }
 
     public String getProductPriceFromCatalogIndex(int index) {
         return driver.findElements(By.cssSelector(".inventory_item_price"))

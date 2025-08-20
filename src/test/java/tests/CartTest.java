@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -9,6 +10,7 @@ public class CartTest extends BaseTest {
     private static final String PRODUCT_NAME_FLEECE_JACKET = "Sauce Labs Fleece Jacket";
 
     @Test(groups = {"smoke"}, description = "Проверка соответствия цены товара в каталоге и корзине ", priority = 1)
+    @Description("Проверка соответствия цены товара в каталоге и корзине ")
     public void checkPriceFromProductInBasket() {
         loginAsStandardUser();
         productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT);
@@ -20,6 +22,7 @@ public class CartTest extends BaseTest {
 
     @Test(priority = 1,
             description = "Проверка добавления нескольких товаров в корзину")
+    @Description("Проверка добавления нескольких товаров в корзину ")
     public void checkAddingFewProductInBasket() {
         loginAsStandardUser();
         productsPage.addFewProductInBasket(1, 2, 3, 5);
@@ -29,6 +32,7 @@ public class CartTest extends BaseTest {
     }
 
     @Test(description = "Проверка количества товара после удаления из корзины", priority = 2)
+    @Description("Проверка количества товара после удаления из корзины")
     public void checkRemoveProductInBasket() {
         loginAsStandardUser();
         productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT, PRODUCT_NAME_FLEECE_JACKET);
@@ -40,6 +44,7 @@ public class CartTest extends BaseTest {
 
     @Test(dependsOnMethods = "checkRemoveProductInBasket", priority = 3,
             description = "Проверка перехода на страницу оформления заказа")
+    @Description("Проверка перехода на страницу оформления заказа")
     public void checkCheckoutPageFromBasket() {
         loginAsStandardUser();
         productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT, PRODUCT_NAME_FLEECE_JACKET);
@@ -50,6 +55,7 @@ public class CartTest extends BaseTest {
     }
 
     @Test(priority = 4, description = "Проверка продолжения покупок из корзины")
+    @Description("Проверка продолжения покупок из корзины")
     public void checkContinueShoppingFromBasket() {
         loginAsStandardUser();
         productsPage.addFewProductInBasket(1, 2);

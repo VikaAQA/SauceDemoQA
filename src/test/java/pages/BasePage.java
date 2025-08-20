@@ -1,6 +1,10 @@
 package pages;
 
-import org.openqa.selenium.*;
+import io.qameta.allure.Step;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -16,21 +20,27 @@ public class BasePage {
         this.driver = driver;
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
+
     public void waitForPageLoaded() {//Дожидается полностью загрузки страицы
         new ExpectedCondition<Boolean>() {
             public Boolean apply(WebDriver driver) {
                 return ((JavascriptExecutor) driver)
                         .executeScript("return document.readyState")
-                        .toString().equals("complete");        }
-        }; }
-    public void clickJs(){//клик Js
-        WebElement element = driver.findElement(By.id("Text"));
-        JavascriptExecutor js =(JavascriptExecutor) driver;
-        js.executeScript("argument[0].click();",element);
+                        .toString().equals("complete");
+            }
+        };
     }
+
+    public void clickJs() {//клик Js
+        WebElement element = driver.findElement(By.id("Text"));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("argument[0].click();", element);
+    }
+
     // Метод ожидания видимости элемента
- public void waitElement(By locator) {
-         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    @Step("Ожидание видимости локатора {locator}")
+    public void waitElement(By locator) {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 }
 
