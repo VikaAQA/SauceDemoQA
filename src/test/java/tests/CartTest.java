@@ -1,5 +1,6 @@
 package tests;
 
+import io.qameta.allure.Description;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -8,7 +9,8 @@ public class CartTest extends BaseTest {
     private static final String PRODUCT_NAME_BIKE_LIGHT = "Sauce Labs Bike Light";
     private static final String PRODUCT_NAME_FLEECE_JACKET = "Sauce Labs Fleece Jacket";
 
-    @Test
+    @Test(groups = {"smoke"}, description = "Проверка соответствия цены товара в каталоге и корзине ", priority = 1)
+    @Description("Проверка соответствия цены товара в каталоге и корзине ")
     public void checkPriceFromProductInBasket() {
         loginAsStandardUser();
         productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT);
@@ -17,7 +19,10 @@ public class CartTest extends BaseTest {
         cartPage.isPageOpened();
         Assert.assertEquals(priceInCataloge, cartPage.getProductPriceInBasket(), "Цена товара в корзине и каталоге не совпадает");
     }
-    @Test
+
+    @Test(priority = 1,
+            description = "Проверка добавления нескольких товаров в корзину")
+    @Description("Проверка добавления нескольких товаров в корзину ")
     public void checkAddingFewProductInBasket() {
         loginAsStandardUser();
         productsPage.addFewProductInBasket(1, 2, 3, 5);
@@ -25,24 +30,32 @@ public class CartTest extends BaseTest {
                 .isPageOpened();
         Assert.assertEquals(cartPage.checkCountProductBasket(), 4, "Не совпадает количество добавленного товара в корзину");
     }
-    @Test
+
+    @Test(description = "Проверка количества товара после удаления из корзины", priority = 2)
+    @Description("Проверка количества товара после удаления из корзины")
     public void checkRemoveProductInBasket() {
         loginAsStandardUser();
-        productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT, PRODUCT_NAME_FLEECE_JACKET);//Подумать как получать список (лист товаров и их добавлять в корзину)
+        productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT, PRODUCT_NAME_FLEECE_JACKET);
         cartPage.openBasket()
                 .isPageOpened()
                 .removeProductInBasket(PRODUCT_NAME_FLEECE_JACKET);
         Assert.assertEquals(cartPage.checkCountProductBasket(), 1, "Не совпадает количество удалееного товара из коризны");
     }
-    @Test
+
+    @Test(dependsOnMethods = "checkRemoveProductInBasket", priority = 3,
+            description = "Проверка перехода на страницу оформления заказа")
+    @Description("Проверка перехода на страницу оформления заказа")
     public void checkCheckoutPageFromBasket() {
         loginAsStandardUser();
         productsPage.addProductInBasket(PRODUCT_NAME_BIKE_LIGHT, PRODUCT_NAME_FLEECE_JACKET);
         cartPage.openBasket()
                 .isPageOpened()
                 .clickToCheckoutPage();
-        checkoutPage.isPageOpened(); }
-    @Test
+        checkoutPage.isPageOpened();
+    }
+
+    @Test(priority = 4, description = "Проверка продолжения покупок из корзины")
+    @Description("Проверка продолжения покупок из корзины")
     public void checkContinueShoppingFromBasket() {
         loginAsStandardUser();
         productsPage.addFewProductInBasket(1, 2);

@@ -5,7 +5,7 @@ import org.testng.annotations.Test;
 
 public class LocatorsTest extends BaseTest {
 
-    @Test
+    @Test(description = "Проверка всех типов локаторов")
     public void checkLocator() {
         driver.get("https://www.saucedemo.com/");
         driver.findElement(By.id("user-name"));
