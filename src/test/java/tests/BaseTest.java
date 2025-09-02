@@ -26,15 +26,13 @@ public class BaseTest {
     CheckoutPage checkoutPage;
     ProductStep productStep;
 
-    String user = System.getProperty("user");
-    String password = System.getProperty("password");
-    protected final String USERNAME = "standard_user";
-    protected final String PASSWORD = "secret_sauce";
+    String user = System.getProperty("user",PropertyReader.getProperty("user"));//скрытие кредов указаны в config.properties
+    String password = System.getProperty("password",PropertyReader.getProperty("password"));//скрытие кредов
 
     @Description("Авторизация пользователя")
     protected void loginAsStandardUser() {
         loginPage.open();
-        loginPage.login(USERNAME, PASSWORD);
+        loginPage.login(user, password);
     }
 
     @Parameters({"browser"})
