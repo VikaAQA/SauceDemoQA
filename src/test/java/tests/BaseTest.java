@@ -26,6 +26,8 @@ public class BaseTest {
     CheckoutPage checkoutPage;
     ProductStep productStep;
 
+    String user = System.getProperty("user");
+    String password = System.getProperty("password");
     protected final String USERNAME = "standard_user";
     protected final String PASSWORD = "secret_sauce";
 

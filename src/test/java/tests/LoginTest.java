@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest {
             priority = 1)
     public void checkPositiveLogin() {
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(user, password);
         assertEquals(productsPage.getTitle(), "Products",
                 "Логин не выполнен");
     }
@@ -20,7 +20,7 @@ public class LoginTest extends BaseTest {
             priority = 2)
     public void checkWithEmptyPassword() {
         loginPage.open();
-        loginPage.login("standard_user", "");
+        loginPage.login(user, "");
         assertEquals(loginPage.getErrorMessage(), "Epic sadface: Password is required",
                 "Сообщение об ошибке не соответствует");
     }
@@ -29,7 +29,7 @@ public class LoginTest extends BaseTest {
             priority = 3, retryAnalyzer = Retry.class)
     public void checkWithEmptyLogin() {
         loginPage.open();
-        loginPage.login("", "secret_sauce");
+        loginPage.login("", password);
         assertEquals(loginPage.getErrorMessage(),
                 "Epic sadface: Username is required",
                 "Сообщение об ошибке не соответствует");
@@ -48,8 +48,8 @@ public class LoginTest extends BaseTest {
     @DataProvider(name = "Проверка логина с негативными данными ")//Передача тестовых данных
     public Object[][] loginData() {
         return new Object[][]{
-                {"", "secret_sauce", "Epic sadface: Username is required"},
-                {"standard_user", "", "Epic sadface: Password is required"},
+                {"", password, "Epic sadface: Username is required"},
+                {user, "", "Epic sadface: Password is required"},
                 {"test", "test", "Epic sadface: Username and password do not match any user in this service"}
         };
     }
