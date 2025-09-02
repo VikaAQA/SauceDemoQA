@@ -11,6 +11,7 @@ import pages.CartPage;
 import pages.CheckoutPage;
 import pages.LoginPage;
 import pages.ProductsPage;
+import steps.ProductStep;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ public class BaseTest {
     ProductsPage productsPage;
     CartPage cartPage;
     CheckoutPage checkoutPage;
+    ProductStep productStep;
 
     protected final String USERNAME = "standard_user";
     protected final String PASSWORD = "secret_sauce";
@@ -58,6 +60,7 @@ public class BaseTest {
         productsPage = new ProductsPage(driver);
         cartPage = new CartPage(driver);
         checkoutPage = new CheckoutPage(driver);
+        productStep = new ProductStep(driver);
     }
 
     @AfterMethod(alwaysRun = true)
