@@ -10,6 +10,8 @@ public class LoginStep {
         loginPage = new LoginPage(driver);
     }
 
+
+
     public void auth(String user,String password){
         loginPage.open();
         loginPage.login(user,password);
